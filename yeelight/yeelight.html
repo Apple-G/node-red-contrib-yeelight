@@ -84,6 +84,34 @@
 
 </script>
 
+<script type="text/x-red" data-template-name="yeelight_command">
+   <!-- The available icon classes are defined Font Awesome Icons (FA Icons) -->
+    <div class="form-row">
+        <label for="node-input-config"><i class="fa fa-user"></i> Yeelight config</label>
+        <input type="text" id="node-input-config">
+
+        <label for="node-input-command">Command</label>        
+        <input type="text" id="node-input-command" >
+        
+        <label for="node-input-params">Params</label>  
+        <input type="text" id="node-input-params" >
+    </div>
+    <br/>
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+
+     <div class="form-row">
+     <p> https://lsong.org/node-yeelight/Yeelight.html </p>
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="yeelight_command">
+  <p>Node to control Yeelight any comand</p>
+  <p> https://lsong.org/node-yeelight/Yeelight.html </p>
+</script>
+
 <script type="text/javascript">
     RED.nodes.registerType('yeelight',{
         category: 'MiHome',
@@ -91,6 +119,26 @@
         defaults: {
             name: {value:""},
             command: {value:"toggle"},
+            config:{type:"yeelight-config",required:true}
+        },
+        inputs:1,
+        outputs:1,
+        // set the icon (held in icons dir below where you save the node)
+        icon: "icon.png",     // saved in  icons/myicon.png
+        label: function() {
+            return (this.name||"yeelight") + ": " + this.command;
+        },
+        labelStyle: function() {
+            return this.name?"node_label_italic":"";
+        }
+    });
+     RED.nodes.registerType('yeelight_command',{
+        category: 'MiHome',
+        color:"#C0DEED",
+        defaults: {
+            name: {value:""},
+            command: {value:""},
+            params: {value:""},
             config:{type:"yeelight-config",required:true}
         },
         inputs:1,
