@@ -89,6 +89,37 @@ module.exports = function(RED) {
 
         });
     }
+    
+    function YeelightNodeCommand(n) {
+        RED.nodes.createNode(this,n);
+        this.config = RED.nodes.getNode(n.config);
+        this.command = n.command
+
+        var node = this;
+
+        node.status({});
+
+        var msg = {};
+        this.send(msg);
+        
+        this.on('input', function (msg) {
+            try {
+                var cmd = this.command
+                this.light = this.config ? this.config.light : null;
+                this.light.command(cmd, msg.payload).then(function(response) {
+                    msg.payload = response;
+                    node.send(msg);
+                });
+                node.status({fill:"green",shape:"ring",text:"Connected"});
+            } catch(err) {
+                node.status({fill:"red",shape:"ring",text:err});
+                node.error(err)
+            }
+        });
+        this.on("close", function() {
+
+        });
+    }
 
     RED.nodes.registerType("yeelight",YeelightNode);
 
