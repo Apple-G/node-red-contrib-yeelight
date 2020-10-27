@@ -121,6 +121,6 @@ module.exports = function(RED) {
         });
     }
 
-    RED.nodes.registerType("yeelight",YeelightNode);
+    RED.nodes.registerType("yeelight_command",YeelightNodeCommand);
 
 }
